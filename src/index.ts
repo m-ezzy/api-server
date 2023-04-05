@@ -32,7 +32,8 @@ app.use(cors({
     'https://raven-api-server.netlify.app',
     'https://642d7da021493d3b6b909b1b--raven-social.netlify.app',
     'https://master--raven-social.netlify.app',
-    'https://ec2-15-206-68-210.ap-south-1.compute.amazonaws.com'
+    'https://ec2-15-206-68-210.ap-south-1.compute.amazonaws.com',
+    'http://raven100.epizy.com',
   ]
 }))
 
