@@ -1,26 +1,21 @@
 import { Connection, createConnection, MysqlError } from 'mysql'
 
-const connect = async () => new Promise<Connection>((resolve, reject) => {
-	/*
-	let hostname: string = 'localhost'
-	let port: number = 3306
-	let username: string = 'root'
-	let password: string = ''
-	let dbname: string = 'raven'
-	*/
+import configs from './configs'
 
-	let hostname: string = 'database-2.cbhtnajgxbkj.ap-south-1.rds.amazonaws.com'
-	let port: number = 3306
-	let username: string = 'admin'
-	let password: string = '123456789'
-	let dbname: string = 'database-2'
+const connect = async () => new Promise<Connection>((resolve, reject) => {
+	let hostname: string = configs.database.hostname
+	let port: number = configs.database.port
+	let username: string = configs.database.username
+	let password: string = configs.database.password
+	let dbname: string = configs.database.dbname
 
 	const connection: Connection = createConnection({
+		socketPath: hostname,
 		host: hostname,
 		port: port,
 		user: username,
 		password: password,
-		database: dbname
+		database: dbname,
 	})
 	connection.connect((error: MysqlError) => {
 		if (error) {
