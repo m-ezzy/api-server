@@ -2,13 +2,15 @@ import { Connection, createConnection, MysqlError } from 'mysql'
 
 import configs from './configs'
 
+// import { databaseConnectionOptions } from './configs'
+
 const connect = async () => new Promise<Connection>((resolve, reject) => {
 	let hostname: string = configs.database.hostname
 	let port: number = configs.database.port
 	let username: string = configs.database.username
 	let password: string = configs.database.password
 	let dbname: string = configs.database.dbname
-
+	
 	const connection: Connection = createConnection({
 		socketPath: hostname,
 		host: hostname,

@@ -46,9 +46,9 @@ const pro = {
 		dbname: 'raven',
 	},
 	apiServer: {
-		protocol: "https",
+		protocol: "http",
 		hostname: "642d7da021493d3b6b909b1b--raven-social.netlify.app",
-		port: 443,
+		port: 8000,
 		path: "/",
 	},
 	client: {
