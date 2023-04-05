@@ -12,7 +12,7 @@ const connect = async () => new Promise<Connection>((resolve, reject) => {
 	let dbname: string = configs.database.dbname
 	
 	const connection: Connection = createConnection({
-		socketPath: hostname,
+		// socketPath: hostname,
 		host: hostname,
 		port: port,
 		user: username,
