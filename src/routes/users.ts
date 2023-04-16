@@ -4,8 +4,8 @@ import uploadFile from './uploadFile'
 
 const router: Router = Router()
 
-router.get("/create", controller.create)
-router.post("/log_in", controller.log_in)
+router.post("/create", controller.create)
+router.post("/login", controller.login)
 // router.post("/check_conv_name", controller.checkUserName)
 // router.post("/check_pass_word", controller.checkPassword)
 router.post("/info", controller.info)

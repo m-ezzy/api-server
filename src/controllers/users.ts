@@ -4,43 +4,42 @@ import { Request, Response } from "express"
 
 import * as users from "../models/users"
 
+const cookieOptions: any = {
+	// domain: `${process.env.CLIENT_HOSTNAME}:${process.env.CLIENT_PORT}`,
+	path: '/',
+	sameSite: 'lax',
+	maxAge: 3600000000,
+}
+
 let models: any = {
 	users: users,
 }
 
 export async function create(req: Request, res: Response) { //signup
-	let row = await models.users.select.fromUserName(req.body.user_name)
+	let row = await models.users.select.fromUserName(req.body.userName)
+
 	if(row) {
-		res.json({status: 'username is not available'})
+		res.status(200).json({userNameIsAvailable: false, status: 'failed', error: 'username is not available'})
 	} else {
-		let user_id = await models.users.insert(req.body.user_name, req.body.pass_word, req.body.first_name, req.body.last_name)
+		let userId = await models.users.insert(req.body.title, req.body.userName, req.body.password)
 
-		//creating chat between itself
-		await models.chats.insert(user_id, user_id)
-
-		res.cookie('user_id', user_id, {maxAge: 3600000000})
-		// res.cookie('user_name', req.body.user_name, {maxAge: '360000000'})
-		// res.redirect('/')
-		// res.json({user_id: user_id, user_name: req.body.username})
-		res.send({status: 'success'})
+		res.cookie('user_id', userId, cookieOptions)
+		res.status(200).send({status: 'success', user_id: userId})
 	}
 }
-export async function log_in(req: Request, res: Response) {
-	let row = await models.users.select.from_user_name_and_pass_word(req.body.user_name, req.body.pass_word)
+export async function login(req: Request, res: Response) {
+	console.log(req.query.userName, req.query.password, req.body.userName, req.body.password)
+
+	let row = await models.users.select.from_user_name_and_pass_word(req.body.userName, req.body.password)
+	
 	// if (row.pass_word == req.body.pass_word) {
-
-	console.log(res.cookie, row)
-
 	if(row) {
-		console.log(res.cookie)
-
-		res.cookie('user_id', row.user_id, {maxAge: 3600000000})
-
-		console.log(res.cookie)
-
-		// res.cookie('username', rows[0].user_name, {maxAge: '360000000'})
-		res.send({status: 'success'})
+		res.cookie('user_id', row.user_id, cookieOptions)
+		console.log('cookie set successfully')
+		res.status(200)
+		res.send({status: 'success', user_id: row.user_id})
 	} else {
+		res.status(500)
 		res.json({
 			status: 'failure',
 			reason: 'username is not registered'
@@ -56,7 +55,7 @@ export async function check_pass_word(req: Request, res: Response) {
 	res.json(row ? true : false)
 }
 export async function info(req: Request, res: Response) {
-	let data = await models.users.select.fromUserId(req.cookies.user_id)
+	let data = await models.users.select.fromUserId(req.body.userId)
 	res.send(data)
 }
 export async function update_info(req: Request, res: Response) {

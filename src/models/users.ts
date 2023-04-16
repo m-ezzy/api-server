@@ -31,13 +31,13 @@ select.fromUserNameBasic = async (user_name: string) => {
 }
 
 select.search = async (q: string) => {
-	let sql = `SELECT user_id, user_name AS conv_name, first_name, last_name, icon FROM users WHERE user_name LIKE '%${q}%' OR first_name LIKE '%${q}%' OR last_name LIKE '%${q}%'`
+	let sql = `SELECT user_id, user_name AS conv_name, title, icon FROM users WHERE user_name LIKE '%${q}%' OR title LIKE '%${q}%'`
 	let rows = await query(sql)
 	return rows
 }
 
-export const insert = async (user_name: string, pass_word: string, first_name: string, last_name: string) => {
-	let sql = `INSERT INTO users(user_name,pass_word,first_name,last_name) VALUES('${user_name}','${pass_word}','${first_name}','${last_name}')`
+export const insert = async (title: string, userName: string, password: string) => {
+	let sql = `INSERT INTO users(title, user_name, pass_word) VALUES('${title}', '${userName}', '${password}')`
 	let rows: any = await query(sql)
 	return rows.insertId
 }

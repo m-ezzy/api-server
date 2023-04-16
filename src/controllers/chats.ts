@@ -28,10 +28,11 @@ export async function previousConv(req: Request, res: Response) {
 
 		p[chat_id] = {
 			...user,
-			title: `${user.first_name} ${user.last_name}`,
 			unread: 0,
 		}
 	}
+	// res.status(404)
+	// res.sendStatus(404)
 	res.json(p)
 }
 
@@ -49,7 +50,6 @@ export async function search_new(req: Request, res: Response) {
 	let rows: any = []
 	let all = await models.users.select.search(req.body.q)
 	all.forEach((a: any) => {
-		a['title'] = `${a.first_name} ${a.last_name}`
 		rows.push(a)
 
 		for(let i = 0 ; i < users.length ; i++) {
@@ -59,9 +59,7 @@ export async function search_new(req: Request, res: Response) {
 			}
 		}
 	})
-
 	console.log(all, rows)
-
 	res.send(rows)
 }
 

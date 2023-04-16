@@ -1,3 +1,7 @@
+const NODE_ENV = 'development' //development //production
+
+// export const NODE_ENV = 'dev'
+
 //development
 const dev = {
 	database: {
@@ -62,6 +66,4 @@ const pro = {
 // const { database, apiServer } = dev
 // export { database, apiServer }
 
-export const NODE_ENV = 'pro'
-
-export default pro //NODE_ENV //pro
+export default (NODE_ENV == 'development' ? dev : pro)

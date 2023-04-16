@@ -53,7 +53,7 @@ index.delete = async (chat_id: number) => {
 }
 
 members.select = async (chat_id: number, user_id: number) => {
-	let sql: string = `SELECT chat_members.chat_id AS conv_id, chat_members.user_id, chat_members.blocked, users.user_name AS conv_name, users.first_name, users.last_name, users.icon FROM chat_members INNER JOIN users ON chat_members.user_id=users.user_id WHERE chat_members.chat_id=${chat_id} AND chat_members.user_id!=${user_id}`
+	let sql: string = `SELECT chat_members.chat_id AS conv_id, chat_members.user_id, chat_members.blocked, users.user_name AS conv_name, users.title, users.icon FROM chat_members INNER JOIN users ON chat_members.user_id=users.user_id WHERE chat_members.chat_id=${chat_id} AND chat_members.user_id!=${user_id}`
 	let rows: any = await query(sql)
 	return rows[0]
 }
